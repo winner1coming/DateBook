@@ -1,0 +1,2070 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "719c9fc919783e4de813424b248a4b6c",
+    "entities": [
+      {
+        "tableName": "library",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `singleton` INTEGER NOT NULL DEFAULT 1, `name` TEXT NOT NULL, `content_revision` INTEGER NOT NULL DEFAULT 0, `created_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "singleton",
+            "columnName": "singleton",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content_revision",
+            "columnName": "content_revision",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "created_at",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updated_at",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_library_singleton",
+            "unique": true,
+            "columnNames": [
+              "singleton"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_library_singleton` ON `${TABLE_NAME}` (`singleton`)"
+          }
+        ]
+      },
+      {
+        "tableName": "asset",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `sha256` TEXT NOT NULL, `relative_path` TEXT NOT NULL, `mime_type` TEXT NOT NULL, `byte_size` INTEGER NOT NULL, `width` INTEGER NOT NULL, `height` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sha256",
+            "columnName": "sha256",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "relative_path",
+            "columnName": "relative_path",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mime_type",
+            "columnName": "mime_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "byte_size",
+            "columnName": "byte_size",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "width",
+            "columnName": "width",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "height",
+            "columnName": "height",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "created_at",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_asset_sha256",
+            "unique": true,
+            "columnNames": [
+              "sha256"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_asset_sha256` ON `${TABLE_NAME}` (`sha256`)"
+          },
+          {
+            "name": "index_asset_relative_path",
+            "unique": true,
+            "columnNames": [
+              "relative_path"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_asset_relative_path` ON `${TABLE_NAME}` (`relative_path`)"
+          }
+        ]
+      },
+      {
+        "tableName": "book",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `library_id` TEXT NOT NULL, `name` TEXT NOT NULL, `name_key` TEXT NOT NULL, `builtin_key` TEXT, `is_protected` INTEGER NOT NULL DEFAULT 0, `icon_key` TEXT NOT NULL DEFAULT 'book', `color_argb` INTEGER NOT NULL DEFAULT -13278421, `cover_asset_id` TEXT, `sort_rank` INTEGER NOT NULL DEFAULT 0, `created_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL, `version` INTEGER NOT NULL DEFAULT 1, PRIMARY KEY(`id`), FOREIGN KEY(`library_id`) REFERENCES `library`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT , FOREIGN KEY(`cover_asset_id`) REFERENCES `asset`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "library_id",
+            "columnName": "library_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name_key",
+            "columnName": "name_key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "builtin_key",
+            "columnName": "builtin_key",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "is_protected",
+            "columnName": "is_protected",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "icon_key",
+            "columnName": "icon_key",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'book'"
+          },
+          {
+            "fieldPath": "color_argb",
+            "columnName": "color_argb",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "-13278421"
+          },
+          {
+            "fieldPath": "cover_asset_id",
+            "columnName": "cover_asset_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "sort_rank",
+            "columnName": "sort_rank",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "created_at",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updated_at",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "version",
+            "columnName": "version",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_book_name_key",
+            "unique": true,
+            "columnNames": [
+              "name_key"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_book_name_key` ON `${TABLE_NAME}` (`name_key`)"
+          },
+          {
+            "name": "index_book_builtin_key",
+            "unique": true,
+            "columnNames": [
+              "builtin_key"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_book_builtin_key` ON `${TABLE_NAME}` (`builtin_key`)"
+          },
+          {
+            "name": "index_book_library_id",
+            "unique": false,
+            "columnNames": [
+              "library_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_book_library_id` ON `${TABLE_NAME}` (`library_id`)"
+          },
+          {
+            "name": "index_book_cover_asset_id",
+            "unique": false,
+            "columnNames": [
+              "cover_asset_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_book_cover_asset_id` ON `${TABLE_NAME}` (`cover_asset_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "library",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "library_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "asset",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "cover_asset_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "event",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `book_id` TEXT NOT NULL, `parent_id` TEXT, `title` TEXT NOT NULL, `kind` TEXT NOT NULL, `count_mode` TEXT NOT NULL, `include_start_day` INTEGER NOT NULL DEFAULT 0, `greeting` TEXT NOT NULL DEFAULT '', `home_visible` INTEGER NOT NULL DEFAULT 1, `pinned` INTEGER NOT NULL DEFAULT 0, `sort_rank` INTEGER NOT NULL DEFAULT 0, `created_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL, `version` INTEGER NOT NULL DEFAULT 1, PRIMARY KEY(`id`), FOREIGN KEY(`book_id`) REFERENCES `book`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT , FOREIGN KEY(`parent_id`, `book_id`) REFERENCES `event`(`id`, `book_id`) ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "book_id",
+            "columnName": "book_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parent_id",
+            "columnName": "parent_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kind",
+            "columnName": "kind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "count_mode",
+            "columnName": "count_mode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "include_start_day",
+            "columnName": "include_start_day",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "greeting",
+            "columnName": "greeting",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "home_visible",
+            "columnName": "home_visible",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          },
+          {
+            "fieldPath": "pinned",
+            "columnName": "pinned",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "sort_rank",
+            "columnName": "sort_rank",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "created_at",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updated_at",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "version",
+            "columnName": "version",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_event_id_book_id",
+            "unique": true,
+            "columnNames": [
+              "id",
+              "book_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_event_id_book_id` ON `${TABLE_NAME}` (`id`, `book_id`)"
+          },
+          {
+            "name": "event_by_parent",
+            "unique": false,
+            "columnNames": [
+              "parent_id",
+              "sort_rank",
+              "id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `event_by_parent` ON `${TABLE_NAME}` (`parent_id`, `sort_rank`, `id`)"
+          },
+          {
+            "name": "event_by_book",
+            "unique": false,
+            "columnNames": [
+              "book_id",
+              "sort_rank",
+              "id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `event_by_book` ON `${TABLE_NAME}` (`book_id`, `sort_rank`, `id`)"
+          },
+          {
+            "name": "event_by_home",
+            "unique": false,
+            "columnNames": [
+              "home_visible",
+              "pinned",
+              "updated_at"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `event_by_home` ON `${TABLE_NAME}` (`home_visible`, `pinned`, `updated_at`)"
+          },
+          {
+            "name": "index_event_parent_id_book_id",
+            "unique": false,
+            "columnNames": [
+              "parent_id",
+              "book_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_event_parent_id_book_id` ON `${TABLE_NAME}` (`parent_id`, `book_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "book",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "book_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "event",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "parent_id",
+              "book_id"
+            ],
+            "referencedColumns": [
+              "id",
+              "book_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "event_date",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`event_id` TEXT NOT NULL, `calendar_type` TEXT NOT NULL, `anchor_year` INTEGER, `anchor_month` INTEGER NOT NULL, `anchor_day` INTEGER NOT NULL, `is_leap_month` INTEGER NOT NULL DEFAULT 0, `all_day` INTEGER NOT NULL DEFAULT 1, `local_time` TEXT, `zone_id` TEXT, `feb29_policy` TEXT NOT NULL DEFAULT 'feb28', `lunar_leap_policy` TEXT NOT NULL DEFAULT 'normal_fallback', `lunar_small_month_policy` TEXT NOT NULL DEFAULT 'month_end', `calendar_engine_version` TEXT NOT NULL DEFAULT 'calendar-v1', PRIMARY KEY(`event_id`), FOREIGN KEY(`event_id`) REFERENCES `event`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "event_id",
+            "columnName": "event_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "calendar_type",
+            "columnName": "calendar_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "anchor_year",
+            "columnName": "anchor_year",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "anchor_month",
+            "columnName": "anchor_month",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "anchor_day",
+            "columnName": "anchor_day",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "is_leap_month",
+            "columnName": "is_leap_month",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "all_day",
+            "columnName": "all_day",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          },
+          {
+            "fieldPath": "local_time",
+            "columnName": "local_time",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "zone_id",
+            "columnName": "zone_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "feb29_policy",
+            "columnName": "feb29_policy",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'feb28'"
+          },
+          {
+            "fieldPath": "lunar_leap_policy",
+            "columnName": "lunar_leap_policy",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'normal_fallback'"
+          },
+          {
+            "fieldPath": "lunar_small_month_policy",
+            "columnName": "lunar_small_month_policy",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'month_end'"
+          },
+          {
+            "fieldPath": "calendar_engine_version",
+            "columnName": "calendar_engine_version",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'calendar-v1'"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "event_id"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "event",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "event_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "recurrence",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`event_id` TEXT NOT NULL, `frequency` TEXT NOT NULL, `interval_days` INTEGER, `until_iso` TEXT, PRIMARY KEY(`event_id`), FOREIGN KEY(`event_id`) REFERENCES `event`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "event_id",
+            "columnName": "event_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "frequency",
+            "columnName": "frequency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "interval_days",
+            "columnName": "interval_days",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "until_iso",
+            "columnName": "until_iso",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "event_id"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "event",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "event_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "appearance",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`event_id` TEXT NOT NULL, `background_kind` TEXT NOT NULL DEFAULT 'gradient', `asset_id` TEXT, `preset_key` TEXT NOT NULL DEFAULT 'forest', `solid_argb` INTEGER NOT NULL DEFAULT -13278421, `focus_x` REAL NOT NULL DEFAULT 0.5, `focus_y` REAL NOT NULL DEFAULT 0.5, `dim_amount` REAL NOT NULL DEFAULT 0.35, `text_color_mode` TEXT NOT NULL DEFAULT 'auto', `font_key` TEXT NOT NULL DEFAULT 'system', PRIMARY KEY(`event_id`), FOREIGN KEY(`event_id`) REFERENCES `event`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`asset_id`) REFERENCES `asset`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "event_id",
+            "columnName": "event_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "background_kind",
+            "columnName": "background_kind",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'gradient'"
+          },
+          {
+            "fieldPath": "asset_id",
+            "columnName": "asset_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "preset_key",
+            "columnName": "preset_key",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'forest'"
+          },
+          {
+            "fieldPath": "solid_argb",
+            "columnName": "solid_argb",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "-13278421"
+          },
+          {
+            "fieldPath": "focus_x",
+            "columnName": "focus_x",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0.5"
+          },
+          {
+            "fieldPath": "focus_y",
+            "columnName": "focus_y",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0.5"
+          },
+          {
+            "fieldPath": "dim_amount",
+            "columnName": "dim_amount",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0.35"
+          },
+          {
+            "fieldPath": "text_color_mode",
+            "columnName": "text_color_mode",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'auto'"
+          },
+          {
+            "fieldPath": "font_key",
+            "columnName": "font_key",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'system'"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "event_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_appearance_asset_id",
+            "unique": false,
+            "columnNames": [
+              "asset_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_appearance_asset_id` ON `${TABLE_NAME}` (`asset_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "event",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "event_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "asset",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "asset_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "goal_detail",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`event_id` TEXT NOT NULL, `start_iso` TEXT NOT NULL, `state` TEXT NOT NULL, `completed_at` INTEGER, `include_in_parent` INTEGER NOT NULL DEFAULT 1, PRIMARY KEY(`event_id`), FOREIGN KEY(`event_id`) REFERENCES `event`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "event_id",
+            "columnName": "event_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "start_iso",
+            "columnName": "start_iso",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "completed_at",
+            "columnName": "completed_at",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "include_in_parent",
+            "columnName": "include_in_parent",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "event_id"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "event",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "event_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "action_record",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `goal_event_id` TEXT NOT NULL, `action_date_iso` TEXT NOT NULL, `body` TEXT NOT NULL, `minutes` INTEGER, `created_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL, `version` INTEGER NOT NULL DEFAULT 1, PRIMARY KEY(`id`), FOREIGN KEY(`goal_event_id`) REFERENCES `goal_detail`(`event_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "goal_event_id",
+            "columnName": "goal_event_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "action_date_iso",
+            "columnName": "action_date_iso",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "body",
+            "columnName": "body",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "minutes",
+            "columnName": "minutes",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "created_at",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updated_at",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "version",
+            "columnName": "version",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "actions_by_goal_date",
+            "unique": false,
+            "columnNames": [
+              "goal_event_id",
+              "action_date_iso",
+              "id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `actions_by_goal_date` ON `${TABLE_NAME}` (`goal_event_id`, `action_date_iso`, `id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "goal_detail",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "goal_event_id"
+            ],
+            "referencedColumns": [
+              "event_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "lifecycle_cause",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `kind` TEXT NOT NULL, `source_event_id` TEXT, `source_book_id` TEXT, `created_at` INTEGER NOT NULL, `purge_after` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`source_event_id`) REFERENCES `event`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL , FOREIGN KEY(`source_book_id`) REFERENCES `book`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kind",
+            "columnName": "kind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "source_event_id",
+            "columnName": "source_event_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "source_book_id",
+            "columnName": "source_book_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "created_at",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "purge_after",
+            "columnName": "purge_after",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_lifecycle_cause_source_event_id",
+            "unique": false,
+            "columnNames": [
+              "source_event_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_lifecycle_cause_source_event_id` ON `${TABLE_NAME}` (`source_event_id`)"
+          },
+          {
+            "name": "index_lifecycle_cause_source_book_id",
+            "unique": false,
+            "columnNames": [
+              "source_book_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_lifecycle_cause_source_book_id` ON `${TABLE_NAME}` (`source_book_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "event",
+            "onDelete": "SET NULL",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "source_event_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "book",
+            "onDelete": "SET NULL",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "source_book_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "lifecycle_member",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cause_id` TEXT NOT NULL, `event_id` TEXT NOT NULL, PRIMARY KEY(`cause_id`, `event_id`), FOREIGN KEY(`cause_id`) REFERENCES `lifecycle_cause`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`event_id`) REFERENCES `event`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "cause_id",
+            "columnName": "cause_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "event_id",
+            "columnName": "event_id",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "cause_id",
+            "event_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "lifecycle_by_event",
+            "unique": false,
+            "columnNames": [
+              "event_id",
+              "cause_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `lifecycle_by_event` ON `${TABLE_NAME}` (`event_id`, `cause_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "lifecycle_cause",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "cause_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "event",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "event_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "tag",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `name_key` TEXT NOT NULL, `created_at` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name_key",
+            "columnName": "name_key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "created_at",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_tag_name_key",
+            "unique": true,
+            "columnNames": [
+              "name_key"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_tag_name_key` ON `${TABLE_NAME}` (`name_key`)"
+          }
+        ]
+      },
+      {
+        "tableName": "event_tag",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`event_id` TEXT NOT NULL, `tag_id` TEXT NOT NULL, PRIMARY KEY(`event_id`, `tag_id`), FOREIGN KEY(`event_id`) REFERENCES `event`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`tag_id`) REFERENCES `tag`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "event_id",
+            "columnName": "event_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tag_id",
+            "columnName": "tag_id",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "event_id",
+            "tag_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_event_tag_tag_id",
+            "unique": false,
+            "columnNames": [
+              "tag_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_event_tag_tag_id` ON `${TABLE_NAME}` (`tag_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "event",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "event_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "tag",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "tag_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "reminder_rule",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `event_id` TEXT NOT NULL, `enabled` INTEGER NOT NULL DEFAULT 0, `offset_unit` TEXT NOT NULL, `offset_value` INTEGER NOT NULL, `local_time` TEXT, `precision_mode` TEXT NOT NULL DEFAULT 'normal', `version` INTEGER NOT NULL DEFAULT 1, PRIMARY KEY(`id`), FOREIGN KEY(`event_id`) REFERENCES `event`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "event_id",
+            "columnName": "event_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "enabled",
+            "columnName": "enabled",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "offset_unit",
+            "columnName": "offset_unit",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "offset_value",
+            "columnName": "offset_value",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "local_time",
+            "columnName": "local_time",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "precision_mode",
+            "columnName": "precision_mode",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'normal'"
+          },
+          {
+            "fieldPath": "version",
+            "columnName": "version",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "reminder_by_event",
+            "unique": false,
+            "columnNames": [
+              "event_id",
+              "enabled"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `reminder_by_event` ON `${TABLE_NAME}` (`event_id`, `enabled`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "event",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "event_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "home_config",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`singleton` INTEGER NOT NULL, `hero_mode` TEXT NOT NULL DEFAULT 'auto', `fixed_event_id` TEXT, `sort_mode` TEXT NOT NULL DEFAULT 'date', `selected_book_id` TEXT, PRIMARY KEY(`singleton`), FOREIGN KEY(`fixed_event_id`) REFERENCES `event`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL , FOREIGN KEY(`selected_book_id`) REFERENCES `book`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
+        "fields": [
+          {
+            "fieldPath": "singleton",
+            "columnName": "singleton",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hero_mode",
+            "columnName": "hero_mode",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'auto'"
+          },
+          {
+            "fieldPath": "fixed_event_id",
+            "columnName": "fixed_event_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "sort_mode",
+            "columnName": "sort_mode",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'date'"
+          },
+          {
+            "fieldPath": "selected_book_id",
+            "columnName": "selected_book_id",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "singleton"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_home_config_fixed_event_id",
+            "unique": false,
+            "columnNames": [
+              "fixed_event_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_home_config_fixed_event_id` ON `${TABLE_NAME}` (`fixed_event_id`)"
+          },
+          {
+            "name": "index_home_config_selected_book_id",
+            "unique": false,
+            "columnNames": [
+              "selected_book_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_home_config_selected_book_id` ON `${TABLE_NAME}` (`selected_book_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "event",
+            "onDelete": "SET NULL",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "fixed_event_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "book",
+            "onDelete": "SET NULL",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "selected_book_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "import_batch",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `format` TEXT NOT NULL, `source_export_id` TEXT NOT NULL, `file_sha256` TEXT NOT NULL, `imported_at` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "format",
+            "columnName": "format",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "source_export_id",
+            "columnName": "source_export_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "file_sha256",
+            "columnName": "file_sha256",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imported_at",
+            "columnName": "imported_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_import_batch_file_sha256",
+            "unique": true,
+            "columnNames": [
+              "file_sha256"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_import_batch_file_sha256` ON `${TABLE_NAME}` (`file_sha256`)"
+          },
+          {
+            "name": "index_import_batch_id_source_export_id",
+            "unique": true,
+            "columnNames": [
+              "id",
+              "source_export_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_import_batch_id_source_export_id` ON `${TABLE_NAME}` (`id`, `source_export_id`)"
+          }
+        ]
+      },
+      {
+        "tableName": "import_provenance",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`batch_id` TEXT NOT NULL, `source_export_id` TEXT NOT NULL, `source_ref` TEXT NOT NULL, `local_event_id` TEXT, PRIMARY KEY(`batch_id`, `source_ref`), FOREIGN KEY(`batch_id`) REFERENCES `import_batch`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`local_event_id`) REFERENCES `event`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL , FOREIGN KEY(`batch_id`, `source_export_id`) REFERENCES `import_batch`(`id`, `source_export_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "batch_id",
+            "columnName": "batch_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "source_export_id",
+            "columnName": "source_export_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "source_ref",
+            "columnName": "source_ref",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "local_event_id",
+            "columnName": "local_event_id",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "batch_id",
+            "source_ref"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_import_provenance_source_export_id_source_ref",
+            "unique": true,
+            "columnNames": [
+              "source_export_id",
+              "source_ref"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_import_provenance_source_export_id_source_ref` ON `${TABLE_NAME}` (`source_export_id`, `source_ref`)"
+          },
+          {
+            "name": "index_import_provenance_local_event_id",
+            "unique": false,
+            "columnNames": [
+              "local_event_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_import_provenance_local_event_id` ON `${TABLE_NAME}` (`local_event_id`)"
+          },
+          {
+            "name": "index_import_provenance_batch_id_source_export_id",
+            "unique": false,
+            "columnNames": [
+              "batch_id",
+              "source_export_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_import_provenance_batch_id_source_export_id` ON `${TABLE_NAME}` (`batch_id`, `source_export_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "import_batch",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "batch_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "event",
+            "onDelete": "SET NULL",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "local_event_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "import_batch",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "batch_id",
+              "source_export_id"
+            ],
+            "referencedColumns": [
+              "id",
+              "source_export_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "device_epoch",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`singleton` INTEGER NOT NULL, `epoch` TEXT NOT NULL, `plan_token` TEXT NOT NULL, `schedule_revision` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`singleton`))",
+        "fields": [
+          {
+            "fieldPath": "singleton",
+            "columnName": "singleton",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "epoch",
+            "columnName": "epoch",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "plan_token",
+            "columnName": "plan_token",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "schedule_revision",
+            "columnName": "schedule_revision",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "singleton"
+          ]
+        }
+      },
+      {
+        "tableName": "reminder_queue",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rule_id` TEXT NOT NULL, `occurrence_key` TEXT NOT NULL, `fire_at` INTEGER NOT NULL, `rule_version` INTEGER NOT NULL, `event_version` INTEGER NOT NULL, `epoch` TEXT NOT NULL, PRIMARY KEY(`rule_id`), FOREIGN KEY(`rule_id`) REFERENCES `reminder_rule`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "rule_id",
+            "columnName": "rule_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "occurrence_key",
+            "columnName": "occurrence_key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fire_at",
+            "columnName": "fire_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rule_version",
+            "columnName": "rule_version",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "event_version",
+            "columnName": "event_version",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "epoch",
+            "columnName": "epoch",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "rule_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "reminder_by_fire",
+            "unique": false,
+            "columnNames": [
+              "fire_at",
+              "rule_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `reminder_by_fire` ON `${TABLE_NAME}` (`fire_at`, `rule_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "reminder_rule",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "rule_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "delivery_log",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`epoch` TEXT NOT NULL, `rule_id` TEXT NOT NULL, `occurrence_key` TEXT NOT NULL, `event_id` TEXT NOT NULL, `rule_version` INTEGER NOT NULL, `event_version` INTEGER NOT NULL, `fire_at` INTEGER NOT NULL, `valid_until` INTEGER NOT NULL, `state` TEXT NOT NULL, `notification_tag` TEXT NOT NULL, `attempted_at` INTEGER, `attempt_count` INTEGER NOT NULL DEFAULT 0, `next_attempt_at` INTEGER NOT NULL, `last_error_code` TEXT, PRIMARY KEY(`epoch`, `rule_id`, `rule_version`, `occurrence_key`))",
+        "fields": [
+          {
+            "fieldPath": "epoch",
+            "columnName": "epoch",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rule_id",
+            "columnName": "rule_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "occurrence_key",
+            "columnName": "occurrence_key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "event_id",
+            "columnName": "event_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rule_version",
+            "columnName": "rule_version",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "event_version",
+            "columnName": "event_version",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fire_at",
+            "columnName": "fire_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "valid_until",
+            "columnName": "valid_until",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notification_tag",
+            "columnName": "notification_tag",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "attempted_at",
+            "columnName": "attempted_at",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "attempt_count",
+            "columnName": "attempt_count",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "next_attempt_at",
+            "columnName": "next_attempt_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "last_error_code",
+            "columnName": "last_error_code",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "epoch",
+            "rule_id",
+            "rule_version",
+            "occurrence_key"
+          ]
+        },
+        "indices": [
+          {
+            "name": "delivery_by_state_retry",
+            "unique": false,
+            "columnNames": [
+              "state",
+              "next_attempt_at"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `delivery_by_state_retry` ON `${TABLE_NAME}` (`state`, `next_attempt_at`)"
+          }
+        ]
+      },
+      {
+        "tableName": "device_binding",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `event_id` TEXT, `kind` TEXT NOT NULL, `external_id` TEXT NOT NULL, `calendar_id` TEXT, `last_written_hash` TEXT, `coverage_json` TEXT NOT NULL DEFAULT '[]', `epoch` TEXT NOT NULL, `state` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`event_id`) REFERENCES `event`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "event_id",
+            "columnName": "event_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "kind",
+            "columnName": "kind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "external_id",
+            "columnName": "external_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "calendar_id",
+            "columnName": "calendar_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "last_written_hash",
+            "columnName": "last_written_hash",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "coverage_json",
+            "columnName": "coverage_json",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'[]'"
+          },
+          {
+            "fieldPath": "epoch",
+            "columnName": "epoch",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_device_binding_kind_external_id",
+            "unique": true,
+            "columnNames": [
+              "kind",
+              "external_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_device_binding_kind_external_id` ON `${TABLE_NAME}` (`kind`, `external_id`)"
+          },
+          {
+            "name": "index_device_binding_event_id",
+            "unique": false,
+            "columnNames": [
+              "event_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_device_binding_event_id` ON `${TABLE_NAME}` (`event_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "event",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "event_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "effect_outbox",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `kind` TEXT NOT NULL, `scope_id` TEXT NOT NULL DEFAULT 'library', `target_revision` INTEGER NOT NULL, `epoch` TEXT NOT NULL, `attempts` INTEGER NOT NULL DEFAULT 0, `next_attempt_at` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kind",
+            "columnName": "kind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scope_id",
+            "columnName": "scope_id",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'library'"
+          },
+          {
+            "fieldPath": "target_revision",
+            "columnName": "target_revision",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "epoch",
+            "columnName": "epoch",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "attempts",
+            "columnName": "attempts",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "next_attempt_at",
+            "columnName": "next_attempt_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "created_at",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_effect_outbox_kind_scope_id_target_revision_epoch",
+            "unique": true,
+            "columnNames": [
+              "kind",
+              "scope_id",
+              "target_revision",
+              "epoch"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_effect_outbox_kind_scope_id_target_revision_epoch` ON `${TABLE_NAME}` (`kind`, `scope_id`, `target_revision`, `epoch`)"
+          }
+        ]
+      },
+      {
+        "tableName": "backup_receipt",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `snapshot_revision` INTEGER NOT NULL, `backup_id` TEXT NOT NULL, `completed_at` INTEGER NOT NULL, `encrypted` INTEGER NOT NULL, `file_sha256` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "snapshot_revision",
+            "columnName": "snapshot_revision",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "backup_id",
+            "columnName": "backup_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "completed_at",
+            "columnName": "completed_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "encrypted",
+            "columnName": "encrypted",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "file_sha256",
+            "columnName": "file_sha256",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "asset_lease",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`job_id` TEXT NOT NULL, `asset_id` TEXT NOT NULL, `expires_at` INTEGER NOT NULL, PRIMARY KEY(`job_id`, `asset_id`), FOREIGN KEY(`asset_id`) REFERENCES `asset`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "job_id",
+            "columnName": "job_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "asset_id",
+            "columnName": "asset_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "expires_at",
+            "columnName": "expires_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "job_id",
+            "asset_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "lease_by_expiry",
+            "unique": false,
+            "columnNames": [
+              "expires_at"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `lease_by_expiry` ON `${TABLE_NAME}` (`expires_at`)"
+          },
+          {
+            "name": "index_asset_lease_asset_id",
+            "unique": false,
+            "columnNames": [
+              "asset_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_asset_lease_asset_id` ON `${TABLE_NAME}` (`asset_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "asset",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "asset_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "command_receipt",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`operation_id` TEXT NOT NULL, `command_hash` TEXT NOT NULL, `epoch` TEXT NOT NULL, `entity_id` TEXT NOT NULL, `entity_version` INTEGER NOT NULL, `content_revision` INTEGER NOT NULL, `committed_at` INTEGER NOT NULL, `result_type` TEXT NOT NULL DEFAULT 'unit', `result_json` TEXT NOT NULL DEFAULT 'null', PRIMARY KEY(`operation_id`))",
+        "fields": [
+          {
+            "fieldPath": "operation_id",
+            "columnName": "operation_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "command_hash",
+            "columnName": "command_hash",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "epoch",
+            "columnName": "epoch",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "entity_id",
+            "columnName": "entity_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "entity_version",
+            "columnName": "entity_version",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content_revision",
+            "columnName": "content_revision",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "committed_at",
+            "columnName": "committed_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "result_type",
+            "columnName": "result_type",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'unit'"
+          },
+          {
+            "fieldPath": "result_json",
+            "columnName": "result_json",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'null'"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "operation_id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '719c9fc919783e4de813424b248a4b6c')"
+    ]
+  }
+}
